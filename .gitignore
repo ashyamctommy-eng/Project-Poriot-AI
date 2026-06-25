@@ -1,0 +1,5 @@
+.htaccess
+htdocs/
+uploads/
+*.zip
+.git
