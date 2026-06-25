@@ -838,6 +838,7 @@ hideThinking=function(){
 input.addEventListener('input',()=>{
   input.style.height='auto';input.style.height=Math.min(input.scrollHeight,200)+'px';
   sendBtn.disabled=isStreaming||!(input.value.trim().length>0||uploadedFile);
+  console.log('input fired',{disabled:sendBtn.disabled,val:input.value.trim().length,isStreaming,uploadedFile});
 });
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.dispatchEvent(new Event('submit'))}});
 
