@@ -219,11 +219,12 @@ pre:hover .copy-btn{opacity:1}
 .upload-btn{background:transparent;border:none;color:var(--text-muted);width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
 .upload-btn svg{width:18px;height:18px}
 .upload-btn:hover{background:var(--surface-hover);color:var(--accent);transform:scale(1.1)}
-.send-btn{background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
+.send-btn{background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;flex-shrink:0}
 .send-btn:hover:not(:disabled){background:#4338ca;transform:scale(1.08)}
 :root.dark .send-btn:hover:not(:disabled){background:#6366f1}
-.send-btn:disabled{background:var(--border);color:var(--text-muted);opacity:.5;cursor:not-allowed;transform:none}
-.send-btn:disabled svg{opacity:.4}
+.send-btn:disabled{background:var(--surface-hover);color:var(--text-muted);opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.send-btn:disabled svg{opacity:.3}
+.send-btn svg{transition:opacity .3s}
 .send-btn.loading svg{animation:spin .8s linear infinite;opacity:0;width:0;height:0}
 .send-btn.loading{position:relative}
 .send-btn.loading::after{content:'';position:absolute;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
@@ -838,7 +839,6 @@ hideThinking=function(){
 input.addEventListener('input',()=>{
   input.style.height='auto';input.style.height=Math.min(input.scrollHeight,200)+'px';
   sendBtn.disabled=isStreaming||!(input.value.trim().length>0||uploadedFile);
-  console.log('input fired',{disabled:sendBtn.disabled,val:input.value.trim().length,isStreaming,uploadedFile});
 });
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.dispatchEvent(new Event('submit'))}});
 
