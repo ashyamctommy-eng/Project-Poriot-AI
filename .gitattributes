@@ -1,0 +1,3 @@
+* linguist-language=PHP
+*.md linguist-detectable=false
+*.json linguist-detectable=false
