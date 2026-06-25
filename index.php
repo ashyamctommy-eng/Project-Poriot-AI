@@ -104,7 +104,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .chat-section::-webkit-scrollbar-track{background:transparent}
 .chat-section::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 
-.sidebar-toggle{display:none;background:transparent;border:1px solid var(--border);color:var(--text-secondary);width:36px;height:36px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;transition:border .2s}
+.sidebar-toggle{display:flex;background:transparent;border:1px solid var(--border);color:var(--text-secondary);width:36px;height:36px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;transition:border .2s}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:199}
 
 /* ── Header (Gemini-style) ──────────────────────────────────────────── */
@@ -258,7 +258,6 @@ pre:hover .copy-btn{opacity:1}
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
   .sidebar-overlay.open{display:block}
-  .sidebar-toggle{display:flex}
   .main-content{margin-left:0}
   .header{padding:8px 0}
   .header-actions{gap:4px}
@@ -317,6 +316,12 @@ pre:hover .copy-btn{opacity:1}
   .empty-state h3{font-size:.9rem}
   .empty-state p{font-size:.8rem}
   .empty-icon svg{width:32px;height:32px}
+}
+
+/* ── Desktop sidebar collapse ───────────────────────────────────────── */
+@media(min-width:769px){
+  body.sidebar-collapsed .sidebar{transform:translateX(-100%)}
+  body.sidebar-collapsed .main-content{margin-left:0}
 }
 </style>
 </head>
@@ -537,6 +542,7 @@ const uploadPreview = document.getElementById('uploadPreview');
 const uploadName    = document.getElementById('uploadName');
 const uploadRemove  = document.getElementById('uploadRemove');
 const modelBadge    = document.getElementById('modelBadge');
+const body          = document.body;
 
 // ── Fetch model name from backend ──────────────────────────────────────────
 fetch('api.php?action=config').then(r=>r.json()).then(d=>{if(d.model)modelBadge.textContent=d.model}).catch(()=>{});
@@ -768,8 +774,16 @@ function hideThinking(){
 }
 
 // ── Sidebar toggle ────────────────────────────────────────────────────────
-function closeSidebar(){sidebar.classList.remove('open');sidebarOverlay.classList.remove('open')}
-sidebarToggle.addEventListener('click',()=>{sidebar.classList.toggle('open');sidebarOverlay.classList.toggle('open')});
+function isDesktop(){return window.innerWidth>=769}
+function closeSidebar(){
+  if(isDesktop()){body.classList.add('sidebar-collapsed')}
+  else{sidebar.classList.remove('open');sidebarOverlay.classList.remove('open')}
+}
+function toggleSidebar(){
+  if(isDesktop()){body.classList.toggle('sidebar-collapsed')}
+  else{sidebar.classList.toggle('open');sidebarOverlay.classList.toggle('open')}
+}
+sidebarToggle.addEventListener('click',toggleSidebar);
 sidebarOverlay.addEventListener('click',closeSidebar);
 const sidebarClose=document.getElementById('sidebarClose');
 if(sidebarClose)sidebarClose.addEventListener('click',closeSidebar);
