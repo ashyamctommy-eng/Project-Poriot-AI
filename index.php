@@ -210,7 +210,7 @@ pre:hover .copy-btn{opacity:1}
 /* ── Input Area (Gemini-style floating capsule) ────────────────────── */
 .input-area{flex-shrink:0;position:sticky;bottom:0;padding:12px 20px 20px;background:linear-gradient(to top,var(--bg) 60%,transparent);z-index:50;max-width:760px;margin:0 auto;width:100%;pointer-events:none}
 .input-area>*{pointer-events:auto}
-.input-form{display:flex;align-items:flex-end;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 6px 6px 20px;transition:border-color .2s,box-shadow .2s,background .2s;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.input-form{display:flex;align-items:flex-end;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:4px 4px 4px 4px;transition:border-color .2s,box-shadow .2s,background .2s;box-shadow:0 2px 12px rgba(0,0,0,.04)}
 :root.dark .input-form{box-shadow:0 2px 12px rgba(0,0,0,.15)}
 .input-form:focus-within{border-color:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-light),0 2px 16px rgba(0,0,0,.06);background:var(--surface)}
 .input-row{display:flex;align-items:flex-end;gap:6px;flex:1}
@@ -219,10 +219,11 @@ pre:hover .copy-btn{opacity:1}
 .upload-btn{background:transparent;border:none;color:var(--text-muted);width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
 .upload-btn svg{width:18px;height:18px}
 .upload-btn:hover{background:var(--surface-hover);color:var(--accent);transform:scale(1.1)}
-.send-btn{background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
-.send-btn:hover:not(:disabled){background:#4338ca;transform:scale(1.05)}
+.send-btn{background:var(--accent);border:none;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;flex-shrink:0}
+.send-btn:hover:not(:disabled){background:#4338ca;transform:scale(1.08)}
 :root.dark .send-btn:hover:not(:disabled){background:#6366f1}
-.send-btn:disabled{opacity:.25;cursor:not-allowed;transform:none}
+.send-btn:disabled{background:var(--border);color:var(--text-muted);opacity:.5;cursor:not-allowed;transform:none}
+.send-btn:disabled svg{opacity:.4}
 .send-btn.loading svg{animation:spin .8s linear infinite;opacity:0;width:0;height:0}
 .send-btn.loading{position:relative}
 .send-btn.loading::after{content:'';position:absolute;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
@@ -285,7 +286,7 @@ pre:hover .copy-btn{opacity:1}
   .suggestion-chip{font-size:.7rem;padding:4px 10px;gap:4px}
   .suggestion-chip svg{width:10px;height:10px}
   .input-area{padding:8px 14px 14px}
-  .input-form{padding:4px 4px 4px 14px;border-radius:999px}
+  .input-form{padding:4px;border-radius:999px}
   .prompt-input{font-size:.88rem;padding:8px 4px}
   .send-btn{width:34px;height:34px}
   .send-btn svg{width:16px;height:16px}
@@ -301,7 +302,7 @@ pre:hover .copy-btn{opacity:1}
   .empty-state p{font-size:.8rem}
   .empty-icon svg{width:32px;height:32px}
 }
-  .input-form{padding:4px 4px 4px 10px;border-radius:10px}
+  .input-form{padding:4px;border-radius:999px}
   .prompt-input{font-size:.85rem;padding:6px 4px}
   .send-btn{width:34px;height:34px}
   .send-btn svg{width:16px;height:16px}
@@ -443,10 +444,12 @@ pre:hover .copy-btn{opacity:1}
         <button class="up-remove" id="uploadRemove"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
       </div>
       <form id="promptForm" class="input-form">
+        <button type="button" class="upload-btn" id="uploadBtn" title="Attach file">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <input type="file" id="fileInput" style="display:none" accept="*/*">
         <div class="input-row">
           <textarea id="promptInput" class="prompt-input" placeholder="Describe what you want to build..." rows="1" autofocus></textarea>
-          <button type="button" class="upload-btn" id="uploadBtn" title="Attach file"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8.5 4.5l-4.5 4.5a2.12 2.12 0 103 3l4.5-4.5a3.18 3.18 0 00-4.5-4.5l-4 4a4.24 4.24 0 006 6l3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <input type="file" id="fileInput" style="display:none" accept="*/*">
         </div>
         <button type="submit" class="send-btn" id="sendBtn" disabled>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v14M4 7l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
