@@ -1,50 +1,62 @@
 # Project Poriot AI Builder
 
-> Made with ♥️ by [P.o.Riot🇰🇪](https://t.me/Poriot_ke)
+> Made with ♥️ by [P.oRiot 🇰🇪](https://t.me/Poriot_ke)
 
-An AI-powered code builder that uses ChatGPT's models (gpt-5-3-mini) to generate code, designs, and solutions from natural language prompts.
+An AI-powered code builder with a Gemini-inspired UI. Streams responses from OpenAI-compatible APIs with automatic Groq fallback.
 
 ## ✨ Features
 
-- **Chat history** — Conversations auto-save to your browser (localStorage). Return anytime.
-- **Conversation sidebar** — Switch between past chats, start new ones, delete old ones.
-- **Context memory** — The AI remembers everything said in the current conversation.
-- **Code with syntax** — Markdown rendering with copy buttons on code blocks.
-- **Zero setup** — No database, no API keys, no config.
+- **Gemini-style UI** — Sliding sidebar, floating input capsule, seamless chat bubbles, dark mode
+- **Streaming responses** — Live SSE with cursor animation, truncation detection, abort mid-generation
+- **Chat history** — Auto-saved to localStorage with sidebar switching and delete
+- **Code rendering** — Syntax-highlighted markdown with copy-on-hover buttons
+- **File uploads** — Drag or attach images and text files (text content auto-injected into prompt)
+- **Toast notifications** — Subtle bottom-right alerts for copy, upload, errors, cancel
+- **Dark mode** — Toggle persisted in localStorage
+- **Chat / Builder modes** — Switch between WhatsApp-style bubbles and full builder view
 
-## Deploy to InfinityFree
+## 🚀 Deploy to Railway
 
-1. **Download** these files:
-   - `index.php`
-   - `api.php`
-   - `.htaccess`
+1. **Fork or clone** this repo
+2. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub**
+3. Select this repo — Railway auto-detects PHP
+4. Go to **Variables** and add:
 
-2. **Upload** via FTP to your InfinityFree `htdocs/` folder.
+| Variable | Required | What to set |
+|---|---|---|
+| `FALLBACK_KEY` | ✅ | Your [Groq API key](https://console.groq.com/keys) (`gsk_...`) — free, no credit card |
+| `API_URL` | ❌ | Override primary endpoint (default: ChatGPT Android internal API) |
+| `API_KEY` | ❌ | API key for custom endpoint (leave empty for default) |
+| `API_MODEL` | ❌ | Model name shown in badge (default: `gpt-4o-mini`) |
+| `FALLBACK_URL` | ❌ | Fallback endpoint (default: `api.groq.com`) |
+| `FALLBACK_MODEL` | ❌ | Fallback model (default: `llama-3.3-70b-versatile`) |
 
-3. **Set PHP to 8.0+** in the InfinityFree control panel.
+5. **Set a custom domain** (optional):
+   - In Railway → **Settings → Domains** → add your domain
+   - Point a CNAME at `your-project.up.railway.app`
 
-4. **Visit** your domain — that's it!
+**Minimum viable setup:** just set `FALLBACK_KEY`. The primary tries the Android ChatGPT endpoint; Groq catches any failures.
 
-## Local Testing
+## 🧪 Local Testing
 
 ```bash
 php -S localhost:8080
-# Then open http://localhost:8080
+# Open http://localhost:8080
 ```
 
-## Files
+## 📁 Files
 
-| File        | Purpose                                      |
-|-------------|----------------------------------------------|
-| `index.php` | Frontend UI + sidebar + localStorage + JS    |
-| `api.php`   | Backend proxy to ChatGPT Android API         |
-| `.htaccess` | InfinityFree security & performance tweaks   |
+| File | Purpose |
+|---|---|
+| `index.php` | Frontend UI (HTML/CSS/JS — no PHP inside) |
+| `api.php` | PHP API proxy (Android endpoint + Groq fallback) |
+| `Procfile` | Railway start command |
+| `railway.json` | Railway build config |
+| `.htaccess` | Apache config (InfinityFree fallback) |
 
-## Requirements
+## 🔧 Requirements
 
-- PHP 8.0+ with `curl` extension
-- Internet connection (proxies to ChatGPT API)
+- PHP 8.0+ with `curl` and `json` extensions (for `api.php`)
+- Internet connection
 
-## Credits
-
-Built by [P.o.Riot🇰🇪](https://t.me/Poriot_ke) — Project Poriot
+Built by [P.oRiot 🇰🇪](https://t.me/Poriot_ke) — Project Poriot
